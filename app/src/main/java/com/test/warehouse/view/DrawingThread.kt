@@ -1,8 +1,6 @@
 package com.test.warehouse.view
 
 import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
 import android.view.SurfaceHolder
 
 
@@ -36,7 +34,7 @@ class DrawingThread(private val drawingSurface: DrawingSurface, private val surf
             print(" Wait Time=$waitTime")
             try {
 
-                Thread.sleep(waitTime)
+                sleep(waitTime)
             } catch (e: InterruptedException) {
             }
             startTime = System.nanoTime()

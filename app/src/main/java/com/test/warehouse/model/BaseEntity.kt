@@ -3,7 +3,7 @@ import kotlin.random.Random
 
 enum class EntityState { Idle,Moving }
 
-abstract class BaseEntity(override var x: Float, override var y: Float, private var speedRate:Int ):IEntity {
+abstract class BaseEntity(override var x: Float, override var y: Float, speedRate:Int ):IEntity {
     override val speed:Int=speedRate
 
     override var state:EntityState= EntityState.Idle

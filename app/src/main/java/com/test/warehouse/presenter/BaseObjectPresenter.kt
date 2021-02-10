@@ -10,7 +10,6 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
 
     protected var entity: BaseEntity = enty
     private val fieldPresenter:FieldPresenter=fieldPresentr
-    var state: EntityState = EntityState.Idle
     var x:Float
         get() = entity.x
         set(value) {entity.x =value}

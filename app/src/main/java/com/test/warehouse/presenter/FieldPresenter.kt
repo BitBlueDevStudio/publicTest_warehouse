@@ -61,7 +61,7 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith: In
 
     private fun isCollided(a: BaseObjectPresenter, b: BaseObjectPresenter): Boolean {
 
-        return !(a.x> b.x+b.width || a.x+a.width < b.x || a.y > b.y+b.height || a.y+a.height < b.y);
+        return !(a.x> b.x+b.width || a.x+a.width < b.x || a.y > b.y+b.height || a.y+a.height < b.y)
     }
 
     fun onDraw(canvas: Canvas) {
