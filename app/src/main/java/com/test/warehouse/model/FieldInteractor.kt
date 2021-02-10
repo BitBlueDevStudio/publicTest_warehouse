@@ -8,7 +8,7 @@ import com.test.warehouse.model.products.MediumProductEntity
 import kotlin.random.Random
 
 class FieldInteractor(Width:Int,Height:Int) {
-    //private var entityPool: MutableList<BaseEntity> = mutableListOf()
+    //private var entityPool: MutableList<BaseEntity> = mutableListOf();
     private var width:Int=Width
     private var height:Int=Height
     val SPAWN_INTERVAL=10
