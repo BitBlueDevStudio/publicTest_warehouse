@@ -13,6 +13,7 @@ class FieldInteractor(Width:Int,Height:Int) {
     private var entityPool: MutableList<BaseEntity> = mutableListOf()
     private var width:Int=Width
     private var height:Int=Height
+    val SPAWN_INTERVAL=10
 
     object ObjectFactory {
         private const val PRODUCT_BASE_SPEED=10
@@ -25,7 +26,7 @@ class FieldInteractor(Width:Int,Height:Int) {
         }
 
         fun createProductRandomly(maxWidth:Int,maxHeight:Int): BaseEntity {
-            return when (Random.nextInt(0,2)) {
+            return when (Random.nextInt(0,3)) {
                 1 -> MediumProductEntity(Random.nextInt(0, maxWidth).toFloat(), Random.nextInt(0, maxHeight).toFloat(), PRODUCT_BASE_SPEED / 2)
                 2 -> HeavyProductEntity(Random.nextInt(0, maxWidth).toFloat(), Random.nextInt(0, maxHeight).toFloat(), PRODUCT_BASE_SPEED / 3)
                 else -> LightProductEntity(Random.nextInt(0, maxWidth).toFloat(), Random.nextInt(0, maxHeight).toFloat(), PRODUCT_BASE_SPEED)

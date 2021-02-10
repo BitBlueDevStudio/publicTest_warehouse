@@ -8,7 +8,6 @@ import com.test.warehouse.model.EntityState
 abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,fieldPresentr: FieldPresenter) {
 
     protected var entity: BaseEntity = enty
-    var lastDrawNanoTime: Long = -1
     private val fieldPresenter:FieldPresenter=fieldPresentr
     var state: EntityState = EntityState.idle
     var x:Float
@@ -29,18 +28,10 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
     val width: Int = image.width
     val height: Int = image.height
 
-    fun update() {
+    fun update(deltaTime: Int) {
 
         if(entity.state==EntityState.moving) {
             // Current time in nanoseconds
-            val now = System.nanoTime()
-
-            // Never once did draw.
-            if (lastDrawNanoTime == -1L) {
-                lastDrawNanoTime = now
-            }
-            // Change nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
-            val deltaTime = ((now - lastDrawNanoTime) / 1000000).toInt()
 
             // Distance moves
             val distance = speed/12 * deltaTime

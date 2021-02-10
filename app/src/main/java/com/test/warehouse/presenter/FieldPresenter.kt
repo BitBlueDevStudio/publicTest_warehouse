@@ -19,8 +19,8 @@ class FieldPresenter(cnt:Context,fieldIntercator:FieldInteractor,fieldWith:Int,f
     var fieldWidth:Int=fieldWith
     var fieldHeigt:Int=fieldHeight
     var DrawInterface=IDraw
-    private var currentTime:Long=-1
     private var lastSpawnTime:Long=-1
+    var lastDrawNanoTime: Long = -1
 
     init {
         spawnObjects(cnt,true)
@@ -41,13 +41,20 @@ class FieldPresenter(cnt:Context,fieldIntercator:FieldInteractor,fieldWith:Int,f
     }
 
     fun updateObjects() {
-        for (item in objectPool) item.update()
+        val now = System.nanoTime()
+
+        // Never once did draw.
+        if (lastDrawNanoTime == -1L) {
+            lastDrawNanoTime = now
+        }
+        // Change nanoseconds to milliseconds (1 nanosecond = 1000000 milliseconds).
+        val deltaTime = ((now - lastDrawNanoTime) / 1000000).toInt()
+        for (item in objectPool) item.update(deltaTime)
     }
 
     fun onDraw(canvas:Canvas) {
         DrawInterface.drawObjects(canvas,objectPool)
-        currentTime=System.currentTimeMillis()
-        if (currentTime>lastSpawnTime+10000) {
+        if (System.currentTimeMillis()>lastSpawnTime+(fieldIntercator.SPAWN_INTERVAL*1000)) {
             spawnObjects(DrawInterface.getSurfaceContext(),false)
         }
     }

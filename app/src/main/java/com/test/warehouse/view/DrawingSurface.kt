@@ -24,7 +24,7 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
     override fun drawObjects(canvas: Canvas, objects: MutableList<BaseObjectPresenter>) {
         for (item in objects) {
             canvas.drawBitmap(item.image, item.x, item.y, null)
-            item.lastDrawNanoTime = System.nanoTime()
+            fieldPresenter.lastDrawNanoTime = System.nanoTime()
         }
     }
 
