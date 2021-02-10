@@ -3,6 +3,7 @@ package com.test.warehouse.presenter
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
+import android.util.Log
 import com.test.warehouse.R
 import com.test.warehouse.model.FieldInteractor
 import com.test.warehouse.model.mans.SilyManEntity
@@ -11,8 +12,9 @@ import com.test.warehouse.model.products.HeavyProductEntity
 import com.test.warehouse.model.products.LightProductEntity
 import com.test.warehouse.model.products.MediumProductEntity
 import com.test.warehouse.view.IDrawingInterface
+import kotlin.math.log
 
-class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith:Int, fieldHeight:Int, IDraw:IDrawingInterface) {
+class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith: Int, fieldHeight: Int, IDraw: IDrawingInterface) {
 
     var objectPool: MutableList<BaseObjectPresenter> = mutableListOf()
     var fieldWidth:Int=fieldWith
@@ -22,18 +24,18 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith:Int
     var lastDrawNanoTime: Long = -1
 
     init {
-        spawnObjects(IDrawSurface.getSurfaceContext(),true)
+        spawnObjects(IDrawSurface.getSurfaceContext(), true)
     }
 
-    private fun spawnObjects(cnt: Context,isStart:Boolean) {
+    private fun spawnObjects(cnt: Context, isStart: Boolean) {
         val entities=fieldIntercator.generateEntities(isStart)
         for (entity in entities) {
             when (entity) {
-                is StrongManEntity -> objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man2),entity.x,entity.y,entity.speed,this))
-                is SilyManEntity -> objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man),entity.x,entity.y,entity.speed,this))
-                is LightProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product),entity.x,entity.y,entity.speed,this))
-                is MediumProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product2),entity.x,entity.y,entity.speed,this))
-                is HeavyProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product3),entity.x,entity.y,entity.speed,this))
+                is StrongManEntity -> objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man2), entity.x, entity.y, entity.speed, this,entity))
+                is SilyManEntity -> objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man), entity.x, entity.y, entity.speed, this,entity))
+                is LightProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product), entity.x, entity.y, entity.speed, this,entity))
+                is MediumProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product2), entity.x, entity.y, entity.speed, this,entity))
+                is HeavyProductEntity -> objectPool.add(ProductPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product3), entity.x, entity.y, entity.speed, this,entity))
             }
             lastSpawnTime=System.currentTimeMillis()
         }
@@ -49,19 +51,25 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith:Int
         for (item in objectPool) {
             item.update(deltaTime)
             if (item is ManPresenter) {
-                var tmpCollision: List<BaseObjectPresenter> =objectPool.filter {it is ProductPresenter && item.x > it.x && item.x < it.width && item.y > it.y && item.y < it.height }
-                if (tmpCollision.size>0)
-                    item.update(deltaTime)
+                var tmpCollision: List<BaseObjectPresenter> =objectPool.filter {it is ProductPresenter && isCollided(item,it) }
+                if (tmpCollision.isNotEmpty())
+                    for (collided in tmpCollision) {
+                        if (item.collideProduct(collided as ProductPresenter))
+                            objectPool = objectPool.minus(collided) as MutableList<BaseObjectPresenter>
+                    }
             }
         }
-
-
     }
 
-    fun onDraw(canvas:Canvas) {
-        IDrawSurface.drawObjects(canvas,objectPool)
+    fun isCollided(a: BaseObjectPresenter, b: BaseObjectPresenter): Boolean {
+
+        return !(a.x> b.x+b.width || a.x+a.width < b.x || a.y > b.y+b.height || a.y+a.height < b.y);
+    }
+
+    fun onDraw(canvas: Canvas) {
+        IDrawSurface.drawObjects(canvas, objectPool)
         if (System.currentTimeMillis()>lastSpawnTime+(fieldIntercator.SPAWN_INTERVAL*1000)) {
-            spawnObjects(IDrawSurface.getSurfaceContext(),false)
+            spawnObjects(IDrawSurface.getSurfaceContext(), false)
         }
     }
 

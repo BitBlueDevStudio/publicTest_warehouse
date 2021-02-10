@@ -1,5 +1,8 @@
 package com.test.warehouse.model.mans
 
-interface IManEntity {
+import com.test.warehouse.model.IEntity
+import com.test.warehouse.model.products.IProductEntity
 
+interface IManEntity: IEntity {
+    fun collidedProduct(product: IProductEntity): Boolean
 }

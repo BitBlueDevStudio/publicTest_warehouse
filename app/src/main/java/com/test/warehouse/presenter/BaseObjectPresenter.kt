@@ -4,6 +4,11 @@ import android.graphics.Bitmap
 import com.test.warehouse.model.BaseEntity
 import com.test.warehouse.model.CordsObject
 import com.test.warehouse.model.EntityState
+import com.test.warehouse.model.IEntity
+import com.test.warehouse.model.mans.IManEntity
+import com.test.warehouse.model.products.IProductEntity
+import com.test.warehouse.model.products.LightProductEntity
+import kotlin.reflect.KClass
 
 abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,fieldPresentr: FieldPresenter) {
 

@@ -35,7 +35,7 @@ class FieldInteractor(Width:Int,Height:Int) {
     fun generateEntities(isStart:Boolean): MutableList<BaseEntity> {
         val tempEntityPool: MutableList<BaseEntity> = mutableListOf()
         for(i in 1..10) tempEntityPool.add(ObjectFactory.createProductRandomly(width,height))
-        if (isStart) for(i in 1..10) tempEntityPool.add(ObjectFactory.createManRandomly(width,height))
+        if (isStart) for(i in 1..1) tempEntityPool.add(ObjectFactory.createManRandomly(width,height))
         entityPool.addAll(tempEntityPool)
         return tempEntityPool
     }

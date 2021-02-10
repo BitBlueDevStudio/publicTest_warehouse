@@ -1,7 +1,7 @@
 package com.test.warehouse.model.products
 
-import com.test.warehouse.model.BaseEntity
+import com.test.warehouse.model.IEntity
 
-interface IProductEntity {
+interface IProductEntity: IEntity {
 
 }
