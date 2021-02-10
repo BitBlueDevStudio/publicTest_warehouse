@@ -5,7 +5,8 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import com.test.warehouse.R
 import com.test.warehouse.model.FieldInteractor
-import com.test.warehouse.model.ManEntity
+import com.test.warehouse.model.mans.IManEntity
+import com.test.warehouse.model.products.IProductEntity
 import com.test.warehouse.view.IDrawingInterface
 
 class FieldPresenter(cnt:Context,fieldIntercator:FieldInteractor,fieldWith:Int,fieldHeight:Int, IDraw:IDrawingInterface) {
@@ -19,8 +20,9 @@ class FieldPresenter(cnt:Context,fieldIntercator:FieldInteractor,fieldWith:Int,f
     init {
         val entities=fieldIntercator.generateEntities()
         for (entity in entities) {
-            if (entity is ManEntity) objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man),entity.x,entity.y,entity.speed,this))
-            //else if (entity is ManEntity)
+            if (entity is IManEntity) objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.man),entity.x,entity.y,entity.speed,this))
+            else if (entity is IProductEntity) objectPool.add(ManPresenter(BitmapFactory.decodeResource(cnt.resources, R.drawable.product),entity.x,entity.y,entity.speed,this))
+
         }
     }
 

@@ -1,7 +1,6 @@
 package com.test.warehouse.presenter
 
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import com.test.warehouse.model.BaseEntity
 import com.test.warehouse.model.CordsObject
 import com.test.warehouse.model.EntityState

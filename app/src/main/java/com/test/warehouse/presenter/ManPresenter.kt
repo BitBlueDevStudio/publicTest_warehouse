@@ -1,18 +1,12 @@
 package com.test.warehouse.presenter
 
-import android.content.Context
-import com.test.warehouse.view.DrawingSurface
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.Canvas
-import com.test.warehouse.R
 import com.test.warehouse.model.CordsObject
-import com.test.warehouse.model.EntityState
-import com.test.warehouse.model.ManEntity
+import com.test.warehouse.model.mans.StrongManEntity
 
 
 class ManPresenter(bitmap: Bitmap, x: Float, y: Float, speed:Int, fieldPresentr:FieldPresenter) :
-    BaseObjectPresenter(bitmap,x,y,ManEntity(x,y,speed),fieldPresentr) {
+    BaseObjectPresenter(bitmap,x,y, StrongManEntity(x,y,speed),fieldPresentr) {
 
 
     /*override fun draw() {

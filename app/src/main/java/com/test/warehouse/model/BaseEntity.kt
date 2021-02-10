@@ -2,6 +2,8 @@ package com.test.warehouse.model
 import android.graphics.Bitmap
 import kotlin.random.Random
 
+enum class EntityState { idle,moving }
+
 abstract class BaseEntity(var x: Float, var y: Float, var speedRate:Int, ) {
     val speed:Int=speedRate
 

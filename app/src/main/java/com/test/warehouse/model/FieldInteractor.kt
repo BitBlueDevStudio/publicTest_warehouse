@@ -1,25 +1,37 @@
 package com.test.warehouse.model
 
-import com.test.warehouse.presenter.BaseObjectPresenter
-import com.test.warehouse.presenter.ManPresenter
-import com.test.warehouse.view.DrawingSurface
+import com.test.warehouse.model.mans.IManEntity
+import com.test.warehouse.model.mans.StrongManEntity
+import com.test.warehouse.model.products.HeavyProductEntity
+import com.test.warehouse.model.products.LightProductEntity
+import com.test.warehouse.model.products.IProductEntity
+import com.test.warehouse.model.products.MediumProductEntity
 import kotlin.random.Random
 
 class FieldInteractor() {
-    var entityPool: MutableList<BaseEntity> = mutableListOf()
+    private var entityPool: MutableList<BaseEntity> = mutableListOf()
 
     object ObjectFactory {
-        fun createManRandomly(): ManEntity{
-            return ManEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), Random.nextInt(6, 12))
+        private const val PRODUCT_BASE_SPEED=10
+
+        fun createManRandomly(): BaseEntity {
+            return StrongManEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), Random.nextInt(6, 12))
         }
 
-        //fun createProductRandomly(surface: DrawingSurface): ManPresenter {
-        //return ManPresenter(surface, 2, 5, 10)
-        //}
+        fun createProductRandomly(): BaseEntity {
+            var chance=Random.nextInt(0,2)
+            return when (chance) {
+                0 -> LightProductEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), PRODUCT_BASE_SPEED)
+                1 -> MediumProductEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), PRODUCT_BASE_SPEED / 2)
+                2 -> HeavyProductEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), PRODUCT_BASE_SPEED / 3)
+                else -> LightProductEntity(Random.nextInt(-40, 40).toFloat(), Random.nextInt(-40, 40).toFloat(), PRODUCT_BASE_SPEED)
+            }
+        }
     }
 
     fun generateEntities(): MutableList<BaseEntity> {
         entityPool= mutableListOf()
+        for(i in 1..5) entityPool.add(ObjectFactory.createProductRandomly())
         for(i in 1..5) entityPool.add(ObjectFactory.createManRandomly())
         return entityPool
     }
