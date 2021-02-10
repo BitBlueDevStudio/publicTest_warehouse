@@ -5,7 +5,7 @@ import com.test.warehouse.model.BaseEntity
 import com.test.warehouse.model.CordsObject
 import com.test.warehouse.model.EntityState
 
-abstract class BaseObjectPresenter(protected var img: Bitmap,X:Float,Y:Float, enty:BaseEntity,fieldPresentr: FieldPresenter) {
+abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,fieldPresentr: FieldPresenter) {
 
     protected var entity: BaseEntity = enty
     var lastDrawNanoTime: Long = -1

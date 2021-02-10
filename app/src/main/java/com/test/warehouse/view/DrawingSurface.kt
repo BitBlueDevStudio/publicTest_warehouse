@@ -17,7 +17,7 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
     }
 
     override fun draw(canvas: Canvas) {
-        super<SurfaceView>.draw(canvas)
+        super.draw(canvas)
         fieldPresenter.onDraw(canvas)
     }
 
@@ -29,10 +29,14 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        fieldPresenter=FieldPresenter(this.context, FieldInteractor(),getWidth(),getHeight(),this)
+        fieldPresenter=FieldPresenter(this.context, FieldInteractor(getWidth(),getHeight()),getWidth(),getHeight(),this)
         drawingThread = DrawingThread(this, holder)
         drawingThread!!.setRunning(true)
         drawingThread!!.start()
+    }
+
+    override fun getSurfaceContext(): Context {
+        return this.context
     }
 
     // Implements method of SurfaceHolder.Callback
@@ -66,13 +70,11 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
 
 interface IDrawingInterface {
 
-    fun drawObjects(canvas: Canvas, objects: MutableList<BaseObjectPresenter> = mutableListOf()) {
+    fun drawObjects(canvas: Canvas, objects: MutableList<BaseObjectPresenter> = mutableListOf())
 
-    }
+    fun update()
 
-    fun update() {
-
-    }
+    fun getSurfaceContext(): Context
 
 
 }
