@@ -12,7 +12,7 @@ import com.test.warehouse.model.products.LightProductEntity
 import com.test.warehouse.model.products.MediumProductEntity
 import com.test.warehouse.view.IDrawingInterface
 
-class FieldPresenter(cnt:Context, private var fieldIntercator: FieldInteractor, fieldWith:Int, fieldHeight:Int, IDraw:IDrawingInterface) {
+class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith:Int, fieldHeight:Int, IDraw:IDrawingInterface) {
 
     var objectPool: MutableList<BaseObjectPresenter> = mutableListOf()
     var fieldWidth:Int=fieldWith
@@ -22,7 +22,7 @@ class FieldPresenter(cnt:Context, private var fieldIntercator: FieldInteractor, 
     var lastDrawNanoTime: Long = -1
 
     init {
-        spawnObjects(cnt,true)
+        spawnObjects(IDrawSurface.getSurfaceContext(),true)
     }
 
     private fun spawnObjects(cnt: Context,isStart:Boolean) {

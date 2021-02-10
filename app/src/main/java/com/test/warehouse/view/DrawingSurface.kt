@@ -29,7 +29,7 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
     }
 
     override fun surfaceCreated(holder: SurfaceHolder) {
-        fieldPresenter=FieldPresenter(this.context, FieldInteractor(getWidth(),getHeight()),getWidth(),getHeight(),this)
+        fieldPresenter=FieldPresenter(FieldInteractor(getWidth(),getHeight()),getWidth(),getHeight(),this)
         drawingThread = DrawingThread(this, holder)
         drawingThread!!.setRunning(true)
         drawingThread!!.start()
