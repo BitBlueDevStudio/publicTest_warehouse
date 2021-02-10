@@ -46,7 +46,16 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith:Int
             lastDrawNanoTime = now
         }
         val deltaTime = ((now - lastDrawNanoTime) / 1000000).toInt()
-        for (item in objectPool) item.update(deltaTime)
+        for (item in objectPool) {
+            item.update(deltaTime)
+            if (item is ManPresenter) {
+                var tmpCollision: List<BaseObjectPresenter> =objectPool.filter {it is ProductPresenter && item.x > it.x && item.x < it.width && item.y > it.y && item.y < it.height }
+                if (tmpCollision.size>0)
+                    item.update(deltaTime)
+            }
+        }
+
+
     }
 
     fun onDraw(canvas:Canvas) {

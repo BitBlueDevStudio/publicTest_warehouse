@@ -28,7 +28,7 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
     val width: Int = image.width
     val height: Int = image.height
 
-    fun update(deltaTime: Int) {
+    open fun update(deltaTime: Int) {
 
         if(entity.state==EntityState.moving) {
 

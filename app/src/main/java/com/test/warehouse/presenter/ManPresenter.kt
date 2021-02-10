@@ -11,4 +11,5 @@ class ManPresenter(bitmap: Bitmap, x: Float, y: Float, speed:Int, fieldPresentr:
     init {
         entity.moveToVector(CordsObject(20F,50F))
     }
+
 }

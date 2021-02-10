@@ -55,7 +55,6 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
     }
 
     init {
-
         this.isFocusable = true
         this.holder.addCallback(this)
     }
