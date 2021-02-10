@@ -4,27 +4,23 @@ import android.graphics.Bitmap
 import com.test.warehouse.model.BaseEntity
 import com.test.warehouse.model.CordsObject
 import com.test.warehouse.model.EntityState
-import com.test.warehouse.model.IEntity
-import com.test.warehouse.model.mans.IManEntity
-import com.test.warehouse.model.products.IProductEntity
-import com.test.warehouse.model.products.LightProductEntity
-import kotlin.reflect.KClass
+import kotlin.math.sqrt
 
 abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,fieldPresentr: FieldPresenter) {
 
     protected var entity: BaseEntity = enty
     private val fieldPresenter:FieldPresenter=fieldPresentr
-    var state: EntityState = EntityState.idle
+    var state: EntityState = EntityState.Idle
     var x:Float
         get() = entity.x
         set(value) {entity.x =value}
     var y:Float
         get() = entity.y
         set(value) {entity.y=value}
-    var speed:Float
+    private var speed:Float
         get() =entity.speed.toFloat()
         set(value) {}
-    var currentMovingVector: CordsObject
+    private var currentMovingVector: CordsObject
         get() = entity.currentMovingVector
         set(value) {entity.currentMovingVector=value}
 
@@ -35,11 +31,11 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
 
     open fun update(deltaTime: Int) {
 
-        if(entity.state==EntityState.moving) {
+        if(entity.state==EntityState.Moving) {
 
             val distance = speed/12 * deltaTime
             val movingVectorLength =
-                    Math.sqrt((currentMovingVector.x * entity.currentMovingVector.x + entity.currentMovingVector.y * entity.currentMovingVector.y).toDouble())
+                    sqrt((currentMovingVector.x * entity.currentMovingVector.x + entity.currentMovingVector.y * entity.currentMovingVector.y).toDouble())
 
 
             this.x += (distance * currentMovingVector.x / movingVectorLength).toInt()

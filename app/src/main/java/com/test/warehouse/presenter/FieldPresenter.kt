@@ -3,7 +3,6 @@ package com.test.warehouse.presenter
 import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Canvas
-import android.util.Log
 import com.test.warehouse.R
 import com.test.warehouse.model.FieldInteractor
 import com.test.warehouse.model.mans.SilyManEntity
@@ -12,11 +11,10 @@ import com.test.warehouse.model.products.HeavyProductEntity
 import com.test.warehouse.model.products.LightProductEntity
 import com.test.warehouse.model.products.MediumProductEntity
 import com.test.warehouse.view.IDrawingInterface
-import kotlin.math.log
 
 class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith: Int, fieldHeight: Int, IDraw: IDrawingInterface) {
 
-    var objectPool: MutableList<BaseObjectPresenter> = mutableListOf()
+    private var objectPool: MutableList<BaseObjectPresenter> = mutableListOf()
     var fieldWidth:Int=fieldWith
     var fieldHeigt:Int=fieldHeight
     private var IDrawSurface=IDraw
@@ -51,7 +49,7 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith: In
         for (item in objectPool) {
             item.update(deltaTime)
             if (item is ManPresenter) {
-                var tmpCollision: List<BaseObjectPresenter> =objectPool.filter {it is ProductPresenter && isCollided(item,it) }
+                val tmpCollision: List<BaseObjectPresenter> =objectPool.filter {it is ProductPresenter && isCollided(item,it) }
                 if (tmpCollision.isNotEmpty())
                     for (collided in tmpCollision) {
                         if (item.collideProduct(collided as ProductPresenter))
@@ -61,7 +59,7 @@ class FieldPresenter(private var fieldIntercator: FieldInteractor, fieldWith: In
         }
     }
 
-    fun isCollided(a: BaseObjectPresenter, b: BaseObjectPresenter): Boolean {
+    private fun isCollided(a: BaseObjectPresenter, b: BaseObjectPresenter): Boolean {
 
         return !(a.x> b.x+b.width || a.x+a.width < b.x || a.y > b.y+b.height || a.y+a.height < b.y);
     }
