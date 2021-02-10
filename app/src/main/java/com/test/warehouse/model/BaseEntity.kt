@@ -1,5 +1,4 @@
 package com.test.warehouse.model
-import android.graphics.Bitmap
 import kotlin.random.Random
 
 enum class EntityState { idle,moving }

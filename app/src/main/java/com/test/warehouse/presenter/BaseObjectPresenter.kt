@@ -31,18 +31,15 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
     fun update(deltaTime: Int) {
 
         if(entity.state==EntityState.moving) {
-            // Current time in nanoseconds
 
-            // Distance moves
             val distance = speed/12 * deltaTime
             val movingVectorLength =
                     Math.sqrt((currentMovingVector.x * entity.currentMovingVector.x + entity.currentMovingVector.y * entity.currentMovingVector.y).toDouble())
 
-            // Calculate the new position of the game character.
+
             this.x += (distance * currentMovingVector.x / movingVectorLength).toInt()
             this.y += (distance * currentMovingVector.y / movingVectorLength).toInt()
 
-            // When the game's character touches the edge of the screen, then change direction
             if (this.x < 0) {
                 this.x = 0F
                 currentMovingVector.x = -entity.currentMovingVector.x
@@ -64,9 +61,5 @@ abstract class BaseObjectPresenter(img: Bitmap,X:Float,Y:Float, enty:BaseEntity,
         }
 
     }
-
-    /*open fun draw() {
-
-    }*/
 
 }

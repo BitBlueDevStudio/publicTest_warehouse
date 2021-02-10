@@ -39,17 +39,13 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
         return this.context
     }
 
-    // Implements method of SurfaceHolder.Callback
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {}
 
-    // Implements method of SurfaceHolder.Callback
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         var retry = true
         while (retry) {
             try {
                 drawingThread?.setRunning(false)
-
-                // Parent thread must wait until the end of GameThread.
                 drawingThread?.join()
             } catch (e: InterruptedException) {
                 e.printStackTrace()
@@ -60,10 +56,7 @@ class DrawingSurface(context: Context?) : SurfaceView(context),
 
     init {
 
-        // Make Game Surface focusable so it can handle events. .
         this.isFocusable = true
-
-        // Sét callback.
         this.holder.addCallback(this)
     }
 }

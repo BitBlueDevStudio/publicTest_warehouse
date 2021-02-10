@@ -1,11 +1,9 @@
 package com.test.warehouse.model
 
-import com.test.warehouse.model.mans.IManEntity
 import com.test.warehouse.model.mans.SilyManEntity
 import com.test.warehouse.model.mans.StrongManEntity
 import com.test.warehouse.model.products.HeavyProductEntity
 import com.test.warehouse.model.products.LightProductEntity
-import com.test.warehouse.model.products.IProductEntity
 import com.test.warehouse.model.products.MediumProductEntity
 import kotlin.random.Random
 
